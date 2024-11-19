@@ -59,16 +59,16 @@ int integersort(int array[], size_t size) {
 }
 
 size_t memreverse(void* src, void* dest, size_t typesize, size_t size) {
-    // Zeige auf das erste Element des Source Arrays
+    // Zeige auf das erste Byte des ersten Elements des Source Arrays
     unsigned char* src_p = (unsigned char*)src;
-    // Zeige auf das letzte Element des Ziel Arrays
+    // Zeige auf das erste Byte des ersten Elements des Ziel Arrays
     unsigned char* dest_p = (unsigned char*)dest + (size - 1) * typesize;
 
     // Iteration über alle Elemente
     for (int i = 0; i < size; i++) {
-        // Iteration über die Byte-Teile eines Elements
+        // Iteration über die Bytes eines Elements
         for (int t = 0; t < typesize; t++) {
-            // Kopie des Elements
+            // Kopie des Byte
             *(dest_p + t) = *(src_p + t);
         }
         src_p += typesize;   // Verschiebe Zeiger ein Element weiter

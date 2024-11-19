@@ -14,10 +14,21 @@ void swap(int* a, int* b) {
 //     *a ^= *b;
 // }
 
-void quicksort(int* array, int left, int right) {
+// Quicksort Implementierung mit Summierung aller Elemente
+int quicksort(int* array, int left, int right) {
+    // Abbruchkriterium: Kein Teilarray mehr vorhanden.
+    if (left > right) {
+        return 0;
+    }
+    // Abbruchkriterium: Teilarray hat Länge 1
+    if (left == right) {
+        return array[right];
+    }
     int i = left;
     int j = right - 1;
     int p = array[right];
+    int sum = 0;
+    // Sortierung des Arrays anhand des Pivotelements p
     while (i < j) {
         while (i < j && array[i] <= p) {
             i++;
@@ -34,21 +45,17 @@ void quicksort(int* array, int left, int right) {
     } else {
         i = right;
     }
-    if (left < i - 1) {
-        quicksort(array, left, i - 1);
-    }
-    if (i + 1 < right) {
-        quicksort(array, i + 1, right);
-    }
+    // Addition des Pivotelements auf die Summe
+    sum += array[i];
+    // Sortierung & Summierung linkes Teilarray
+    sum += quicksort(array, left, i - 1);
+    // Sortierung & Summierung rechts Teilarray
+    sum += quicksort(array, i + 1, right);
+    return sum;
 }
 
 int integersort(int array[], size_t size) {
-    quicksort(array, 0, size - 1);
-    int sum = 0;
-    for (int i = 0; i < size; i++) {
-        sum += array[i];
-    }
-    return sum;
+    return quicksort(array, 0, size - 1);
 }
 
 size_t memreverse(void* src, void* dest, size_t typesize, size_t size) {
@@ -64,8 +71,8 @@ size_t memreverse(void* src, void* dest, size_t typesize, size_t size) {
             // Kopie des Elements
             *(dest_p + t) = *(src_p + t);
         }
-        src_p += typesize; // Verschiebe Zeiger ein Element weiter
-        dest_p -= typesize; // Verschiebe Zeige ein Element zurück
+        src_p += typesize;   // Verschiebe Zeiger ein Element weiter
+        dest_p -= typesize;  // Verschiebe Zeige ein Element zurück
     }
     return size * typesize;
 }

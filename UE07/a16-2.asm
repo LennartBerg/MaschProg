@@ -1,6 +1,6 @@
 SECTION .data     ; /* contains initialized data */
-a   DD -60
-b   DD 7
+a DD 60
+b DD 7
 
 SECTION .bss      ; /* contains uninitialized data */
 
@@ -11,8 +11,8 @@ GLOBAL _start     ;
 _start:           ; int main(void){
     nop
     mov eax, [a]
-    imul [b]
-    ; Ergebnis ist in EDX:EAX gespeichert. EAX reicht hier aus, da -420 vollständig in EAX passt.
+    mul [b]
+    ; Ergebnis ist in EDX:EAX gespeichert. EAX reicht hier aus, da 420 vollständig in EAX passt.
 
                   ;   return 0;
 end:mov eax, 1    ;   /* the exit system call

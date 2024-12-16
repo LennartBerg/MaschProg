@@ -1,6 +1,8 @@
+N EQU 32
+
 SECTION .data     ; /* contains initialized data */
-a   DD -60
-b   DD 7
+a DD 43
+i DD 0
 
 SECTION .bss      ; /* contains uninitialized data */
 
@@ -10,9 +12,18 @@ GLOBAL _start     ;
 
 _start:           ; int main(void){
     nop
+    mov ecx, [i]
+
+f1: cmp ecx, N
+    jge end
+    
     mov eax, [a]
-    imul [b]
-    ; Ergebnis ist in EDX:EAX gespeichert. EAX reicht hier aus, da -420 vollständig in EAX passt.
+    rol eax, 1
+    mov [a], eax
+
+    jmp m1
+
+
 
                   ;   return 0;
 end:mov eax, 1    ;   /* the exit system call

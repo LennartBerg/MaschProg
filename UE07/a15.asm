@@ -12,18 +12,23 @@ GLOBAL _start     ;
 
 _start:           ; int main(void){
     nop
-    mov ecx, [i]
+    mov eax, [a]  ; input number
+    mov ebx, 1    ; bitmask
+    mov ecx, [i]  ; loop index
+    mov edx, 0    ; result
 
-f1: cmp ecx, N
-    jge end
-    
-    mov eax, [a]
-    rol eax, 1
-    mov [a], eax
+l1: cmp ecx, N
+    jge end       ; for i < N
+    rol eax, 1    ; rotate a left
+    jc c1         ; if CF == 1
+r1: shl ebx, 1    ; b <<= 1
+    inc ecx       ; i++
+    jmp l1
 
-    jmp m1
+c1: add edx, ebx ; res += b
+    jmp r1
 
-
+    ; Ergebnis liegt im edx Register vor
 
                   ;   return 0;
 end:mov eax, 1    ;   /* the exit system call
